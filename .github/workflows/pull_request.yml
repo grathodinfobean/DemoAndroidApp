@@ -1,0 +1,75 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build-and-test:
+    name: Build & Unit Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
+      - name: Build project
+        run: ./gradlew build
+
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest
+
+      - name: Run lint
+        run: ./gradlew lint
+
+#  distribute:
+#    name: Distribute bundle to Google Play
+#    needs: test
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#
+#      - name: Setup JDK 17
+#        uses: actions/setup-java@v3
+#        with:
+#          distribution: 'temurin'
+#          java-version: '17'
+#          cache: 'gradle'
+#
+#      - name: Version Bump
+#        uses: chkfung/android-version-actions@1.2.3
+#        with:
+#          gradlePath: app/build.gradle.kts
+#          versionCode: ${{ github.run_number}}
+#
+#      - name: assemble release bundle
+#        run: ./gradlew clean bundleRelease
+#
+#      - name: Sign Release
+#        uses: actions/setup-java@v3
+#
+#      - name: Upload app on google play
+#        uses: r0adkll/upload-google-play@v1.0.8
+#        with:
+#          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+#          packageName: com.example.myapp
+#          releaseFile: app/build/outputs/bundle/release/app-release.aab
+#          track: internal
