@@ -7,6 +7,6 @@ class MathUtilsTest {
 
     @Test
     fun checkSum() {
-        assertEquals(4, MathUtils.sum(2,3))
+        assertEquals(4, MathUtils.sum(2,2))
     }
 }
