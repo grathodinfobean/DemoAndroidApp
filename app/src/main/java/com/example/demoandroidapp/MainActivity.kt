@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import com.example.demoandroidapp.ui.theme.DemoAndroidAppTheme
 
 class MainActivity : ComponentActivity() {
-    val name =
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,6 @@ class MainActivity : ComponentActivity() {
                 DemoAndroidAppApp()
             }
         }
-        Log.d("TAG", "Hardcoded text")
     }
 }
 
